@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		130F969823A6092D000D8DCC /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130F969723A6092D000D8DCC /* Array+Extension.swift */; };
 		130F969A23A61325000D8DCC /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130F969923A61325000D8DCC /* UIImageView+Extension.swift */; };
+		130F969C23A62BB6000D8DCC /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130F969B23A62BB6000D8DCC /* ImageCacheService.swift */; };
 		132739A723A4ADE6007299A3 /* MomentsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132739A623A4ADE6007299A3 /* MomentsUITests.swift */; };
 		132739C423A4B1D6007299A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 132739B523A4B1D6007299A3 /* LaunchScreen.storyboard */; };
 		132739C523A4B1D6007299A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 132739B723A4B1D6007299A3 /* Main.storyboard */; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		130F969723A6092D000D8DCC /* Array+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		130F969923A61325000D8DCC /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		130F969B23A62BB6000D8DCC /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		1327398C23A4ADE5007299A3 /* Moments.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moments.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		132739A223A4ADE6007299A3 /* MomentsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MomentsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		132739A623A4ADE6007299A3 /* MomentsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentsUITests.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			children = (
 				132739D923A4EDC0007299A3 /* ResponseService.swift */,
 				132739DB23A4EE96007299A3 /* HUDService.swift */,
+				130F969B23A62BB6000D8DCC /* ImageCacheService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				132739F323A530F1007299A3 /* MomentsViewModel.swift in Sources */,
 				130F969823A6092D000D8DCC /* Array+Extension.swift in Sources */,
 				132739E623A52898007299A3 /* UIView+Extension.swift in Sources */,
+				130F969C23A62BB6000D8DCC /* ImageCacheService.swift in Sources */,
 				132739D023A4C0B3007299A3 /* MomentsAPI.swift in Sources */,
 				132739E023A4F3A9007299A3 /* UserEntity.swift in Sources */,
 				132739F823A536ED007299A3 /* MomentsBaseRowCell.swift in Sources */,

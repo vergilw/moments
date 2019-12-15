@@ -91,8 +91,12 @@ class MomentsImageRowCell: MomentsBaseRowCell {
             contentView.layoutIfNeeded()
         }
         
-        if let string = entity.images?.first?.url, let url = URL(string: string) {
-            imgImgView.setImageWith(url, placeholder: nil)
+        if let string = entity.images?.first?.url {
+            ImageCacheService.sharedInstance.imageForUrl(urlString: string) { [weak self] (image, url) in
+                if let image = image {
+                    self?.imgImgView.image = image
+                }
+            }
         }
         
     }

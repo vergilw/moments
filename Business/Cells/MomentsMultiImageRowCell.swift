@@ -120,9 +120,14 @@ class MomentsMultiImageRowCell: MomentsBaseRowCell {
         
         var index = 0
         for image in images {
-            if let string = image.url, let url = URL(string: string) {
-                imgArray[index].setImageWith(url, placeholder: nil)
-                imgArray[index].isHidden = false
+            if let string = image.url {
+                let imgView = imgArray[index]
+                ImageCacheService.sharedInstance.imageForUrl(urlString: string) { (image, url) in
+                    if let image = image {
+                        imgView.image = image
+                    }
+                    imgView.isHidden = false
+                }
                 index += 1
             }
         }

@@ -13,6 +13,8 @@ class MomentsBaseRowCell: UITableViewCell {
     var avatarImgView: UIImageView = {
         let imgView = UIImageView()
         imgView.contentMode = .scaleAspectFill
+        imgView.layer.cornerRadius = 6
+        imgView.layer.masksToBounds = true
         return imgView
     }()
     
@@ -105,8 +107,12 @@ class MomentsBaseRowCell: UITableViewCell {
     
     // MARK: - ============= Reload =============
     func setup(entity: MomentEntity) {
-        if let string = entity.sender?.avatar, let url = URL(string: string) {
-            avatarImgView.setImageWith(url, placeholder: nil)
+        if let string = entity.sender?.avatar {
+            ImageCacheService.sharedInstance.imageForUrl(urlString: string) { [weak self] (image, url) in
+                if let image = image {
+                    self?.avatarImgView.image = image
+                }
+            }
         }
         
         nicknameLabel.text  = entity.sender?.nick

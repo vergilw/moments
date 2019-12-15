@@ -3,9 +3,6 @@ PODS:
   - FBRetainCycleDetector (0.1.4)
   - HandyJSON (5.0.1)
   - IQKeyboardManagerSwift (6.5.2)
-  - Kingfisher (5.9.0):
-    - Kingfisher/Core (= 5.9.0)
-  - Kingfisher/Core (5.9.0)
   - MBProgressHUD (1.1.0)
   - MJRefresh (3.2.0)
   - MLeaksFinder (1.0.0):
@@ -27,7 +24,6 @@ DEPENDENCIES:
   - Alamofire
   - HandyJSON
   - IQKeyboardManagerSwift
-  - Kingfisher
   - MBProgressHUD
   - MJRefresh
   - MLeaksFinder
@@ -43,7 +39,6 @@ SPEC REPOS:
     - FBRetainCycleDetector
     - HandyJSON
     - IQKeyboardManagerSwift
-    - Kingfisher
     - MBProgressHUD
     - MJRefresh
     - MLeaksFinder
@@ -59,7 +54,6 @@ SPEC CHECKSUMS:
   FBRetainCycleDetector: 46f8179bbb1c587deee3ea838a1a3ee02acf5015
   HandyJSON: d45b8415c501e3affc59ca9762c1197ff0feb646
   IQKeyboardManagerSwift: c75366f1f19590e8caeae45fcd5815c9289d6099
-  Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
   MLeaksFinder: 8c435bd2f6d070af18cff082b503b21adc130fc0
@@ -70,6 +64,6 @@ SPEC CHECKSUMS:
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: b49f1736e71989df9ab512cc3b6b056a977ca9f1
+PODFILE CHECKSUM: dc6c180099e4b15048e292c28593a7e961c78c9a
 
 COCOAPODS: 1.8.0
