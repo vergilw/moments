@@ -18,9 +18,7 @@ class MomentsViewController: UIViewController {
     
     fileprivate var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = UIConstants.Color.separator
-        tableView.separatorInset = .zero
+        tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView()
         if #available(iOS 11, *) {
@@ -79,6 +77,8 @@ class MomentsViewController: UIViewController {
         tableView.register(MomentsBaseRowCell.self, forCellReuseIdentifier: MomentsBaseRowCell.className())
         tableView.register(MomentsImageRowCell.self, forCellReuseIdentifier: MomentsImageRowCell.className())
         tableView.register(MomentsMultiImageRowCell.self, forCellReuseIdentifier: MomentsMultiImageRowCell.className())
+        tableView.register(MomentsCommentRowCell.self, forCellReuseIdentifier: MomentsCommentRowCell.className())
+        tableView.register(MomentsSeparatorCell.self, forCellReuseIdentifier: MomentsSeparatorCell.className())
         tableView.mj_header = MJRefreshStateHeader(refreshingBlock: { [weak self] in
             self?.viewModel.fetchLocalData {
                 self?.tableView.mj_header.endRefreshing()
@@ -146,28 +146,40 @@ extension MomentsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.localMomentEntities?.count ?? 0
+        return viewModel.packagedEntities?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let entity = viewModel.localMomentEntities?[indexPath.row] else { return 0 }
+        guard let entity = viewModel.packagedEntities?[indexPath.row] else { return 0 }
         
-        if entity.images?.count ?? 0 > 1 {
-            return tableView.fd_heightForCell(withIdentifier: MomentsMultiImageRowCell.className(), cacheBy: indexPath) { (cell) in
-                if let cell = cell as? MomentsMultiImageRowCell {
-                    cell.setup(entity: entity)
-                }
-            }
-        } else if entity.images?.count ?? 0 > 0 {
-            return tableView.fd_heightForCell(withIdentifier: MomentsImageRowCell.className(), cacheBy: indexPath) { (cell) in
-                if let cell = cell as? MomentsImageRowCell {
-                    cell.setup(entity: entity)
+        if let _ = entity as? String {
+            return 16
+        } else if let commentEntity = entity as? CommentEntity {
+            return tableView.fd_heightForCell(withIdentifier: MomentsCommentRowCell.className(), cacheBy: indexPath) { (cell) in
+                if let cell = cell as? MomentsCommentRowCell {
+                    cell.setup(entity: commentEntity)
                 }
             }
         } else {
-            return tableView.fd_heightForCell(withIdentifier: MomentsBaseRowCell.className(), cacheBy: indexPath) { (cell) in
-                if let cell = cell as? MomentsBaseRowCell {
-                    cell.setup(entity: entity)
+            guard let entity = entity as? MomentEntity else { return 0 }
+            
+            if entity.images?.count ?? 0 > 1 {
+                return tableView.fd_heightForCell(withIdentifier: MomentsMultiImageRowCell.className(), cacheBy: indexPath) { (cell) in
+                    if let cell = cell as? MomentsMultiImageRowCell {
+                        cell.setup(entity: entity)
+                    }
+                }
+            } else if entity.images?.count ?? 0 > 0 {
+                return tableView.fd_heightForCell(withIdentifier: MomentsImageRowCell.className(), cacheBy: indexPath) { (cell) in
+                    if let cell = cell as? MomentsImageRowCell {
+                        cell.setup(entity: entity)
+                    }
+                }
+            } else {
+                return tableView.fd_heightForCell(withIdentifier: MomentsBaseRowCell.className(), cacheBy: indexPath) { (cell) in
+                    if let cell = cell as? MomentsBaseRowCell {
+                        cell.setup(entity: entity)
+                    }
                 }
             }
         }
@@ -176,20 +188,31 @@ extension MomentsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let entity = viewModel.localMomentEntities?[indexPath.row] else { return UITableViewCell() }
+        guard let entity = viewModel.packagedEntities?[indexPath.row] else { return UITableViewCell() }
         
-        if entity.images?.count ?? 0 > 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: MomentsMultiImageRowCell.className(), for: indexPath) as! MomentsMultiImageRowCell
-            cell.setup(entity: entity)
+        if let _ = entity as? String {
+            let cell = tableView.dequeueReusableCell(withIdentifier: MomentsSeparatorCell.className(), for: indexPath) as! MomentsSeparatorCell
             return cell
-        } else if entity.images?.count ?? 0 > 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: MomentsImageRowCell.className(), for: indexPath) as! MomentsImageRowCell
-            cell.setup(entity: entity)
+        } else if let commentEntity = entity as? CommentEntity {
+            let cell = tableView.dequeueReusableCell(withIdentifier: MomentsCommentRowCell.className(), for: indexPath) as! MomentsCommentRowCell
+            cell.setup(entity: commentEntity)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: MomentsBaseRowCell.className(), for: indexPath) as! MomentsBaseRowCell
-            cell.setup(entity: entity)
-            return cell
+            guard let entity = entity as? MomentEntity else { return UITableViewCell() }
+            
+            if entity.images?.count ?? 0 > 1 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: MomentsMultiImageRowCell.className(), for: indexPath) as! MomentsMultiImageRowCell
+                cell.setup(entity: entity)
+                return cell
+            } else if entity.images?.count ?? 0 > 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: MomentsImageRowCell.className(), for: indexPath) as! MomentsImageRowCell
+                cell.setup(entity: entity)
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: MomentsBaseRowCell.className(), for: indexPath) as! MomentsBaseRowCell
+                cell.setup(entity: entity)
+                return cell
+            }
         }
     }
     

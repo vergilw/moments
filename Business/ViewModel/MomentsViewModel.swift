@@ -10,8 +10,9 @@ import Foundation
 
 class MomentsViewModel {
     
-    var remoteMomentEntities: [MomentEntity]?
-    var localMomentEntities: [MomentEntity]?
+    fileprivate var remoteMomentEntities: [MomentEntity]?
+    fileprivate var localMomentEntities: [MomentEntity]?
+    var packagedEntities: [Any]?
     var dataPerPage: Int = 5
     var dataHasMore: Bool?
     
@@ -38,6 +39,9 @@ class MomentsViewModel {
         let startIndex = self.localMomentEntities?.count ?? 0
         self.localMomentEntities?.append(contentsOf: Array(entities[startIndex..<startIndex+self.dataPerPage]))
         
+        //将评论Entity拆分出来
+        packageData()
+        
         if entities.count > self.localMomentEntities?.count ?? 0 {
             self.dataHasMore = true
         } else {
@@ -47,6 +51,20 @@ class MomentsViewModel {
         print(self.localMomentEntities?.count ?? 0)
         
         completion()
+    }
+    
+    fileprivate func packageData() {
+        guard let entities = self.localMomentEntities else { return }
+        
+        var packagedEntities = [Any]()
+        for entity in entities {
+            packagedEntities.append(entity)
+            if let commentEntities = entity.comments, commentEntities.count > 0 {
+                packagedEntities.append(contentsOf: commentEntities)
+            }
+            packagedEntities.append(String())
+        }
+        self.packagedEntities = packagedEntities
     }
     
     func fetchLocalData(completion: @escaping ()->Void) {
