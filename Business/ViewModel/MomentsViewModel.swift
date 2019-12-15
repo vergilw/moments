@@ -15,12 +15,16 @@ class MomentsViewModel {
     var dataPerPage: Int = 5
     var dataHasMore: Bool?
     
-    func fetchRemoteData(completion: @escaping ()->Void) {
+    fileprivate func fetchRemoteData(completion: @escaping ()->Void) {
         MomentsProvider.request(.moments, completion: ResponseService.sharedInstance.response(completion: { (code,JSON) in
             
+            self.remoteMomentEntities = []
             if let moments = JSON {
-                if let entities = [MomentEntity].deserialize(from: moments) as? [MomentEntity] {
-                    self.remoteMomentEntities = entities
+                for moment in moments {
+                    if let entity = MomentEntity.deserialize(from: moment),
+                        (entity.content?.count ?? 0 > 0 || entity.images?.count ?? 0 > 0) {
+                        self.remoteMomentEntities?.append(entity)
+                    }
                 }
             }
             
@@ -28,7 +32,7 @@ class MomentsViewModel {
         }))
     }
     
-    func loadDataFromLocal() {
+    fileprivate func loadDataFromLocal(completion: @escaping ()->Void) {
         guard let entities = self.remoteMomentEntities, entities.count > self.localMomentEntities?.count ?? 0 else { return }
         
         let startIndex = self.localMomentEntities?.count ?? 0
@@ -40,14 +44,18 @@ class MomentsViewModel {
             self.dataHasMore = false
         }
         
-        print(self.localMomentEntities as Any)
+        print(self.localMomentEntities?.count ?? 0)
+        
+        completion()
     }
     
-    func fetchLocalData() {
+    func fetchLocalData(completion: @escaping ()->Void) {
         
         let task = {
             self.localMomentEntities = []
-            self.loadDataFromLocal()
+            self.loadDataFromLocal {
+                completion()
+            }
         }
         
         if remoteMomentEntities == nil {
@@ -59,7 +67,9 @@ class MomentsViewModel {
         }
     }
     
-    func fetchMoreLocalData() {
-        loadDataFromLocal()
+    func fetchMoreLocalData(completion: @escaping ()->Void) {
+        loadDataFromLocal {
+            completion()
+        }
     }
 }

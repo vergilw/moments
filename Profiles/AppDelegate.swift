@@ -19,11 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupRootViewController()
         self.window?.makeKeyAndVisible()
         
+        UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+        
         return true
     }
     
     func setupRootViewController() {
         let navigationController = UINavigationController(rootViewController: MomentsViewController())
+        navigationController.navigationBar.isTranslucent = false
         self.window?.rootViewController = navigationController
     }
     

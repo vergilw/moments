@@ -23,19 +23,19 @@ public struct UIConstants {
         public static let head: UIColor = UIColor("#000")
         public static let subhead: UIColor = UIColor("#333")
         
-        public static let body: UIColor = UIColor("#888")
+        public static let body: UIColor = UIColor("#353535")
         
         public static let foot1: UIColor = UIColor("#b7b7b7")
         
         public static let disable: UIColor = UIColor("#ccc")
-        public static let background: UIColor = UIColor("#f6f6f6")
-        public static let separator: UIColor = UIColor("#e7e8ea")
+        public static let background: UIColor = UIColor("#fff")
+        public static let separator: UIColor = UIColor("#e1e1e0")
+        public static let selectable: UIColor = UIColor("#5b6a91")
     }
     
     public struct Font {
-//        public static let largeTitle: UIFont = UIFont(name: "PingFangSC-Semibold", size: 25)!
         
-        public static let h1: UIFont = UIFont(name: "PingFangSC-Medium", size: 15)!
+        public static let h1: UIFont = UIFont(name: "PingFangSC-Medium", size: 16)!
         public static let h2: UIFont = UIFont(name: "PingFangSC-Regular", size: 15)!
         public static let h3: UIFont = UIFont(name: "PingFangSC-Regular", size: 14)!
         public static let h4: UIFont = UIFont(name: "PingFangSC-Regular", size: 13)!
@@ -43,7 +43,7 @@ public struct UIConstants {
         public static let caption1: UIFont = UIFont(name: "PingFangSC-Regular", size: 11)!
         public static let caption2: UIFont = UIFont(name: "PingFangSC-Medium", size: 15)!
         
-        public static let body: UIFont = UIFont(name: "PingFangSC-Regular", size: 14)!
+        public static let body: UIFont = UIFont(name: "PingFangSC-Regular", size: 16)!
         
         public static let foot1: UIFont = UIFont(name: "PingFangSC-Regular", size: 12)!
         public static let foot2: UIFont = UIFont(name: "PingFangSC-Regular", size: 11)!
@@ -55,10 +55,10 @@ public struct UIConstants {
     }
     
     public struct Margin {
-        public static let leading: CGFloat = 16
-        public static let trailing: CGFloat = 16
+        public static let leading: CGFloat = 12
+        public static let trailing: CGFloat = 12
         public static let top: CGFloat = 16
-        public static let bottom: CGFloat = 16
+        public static let bottom: CGFloat = 12
     }
     
     public static let cornerRadius: CGFloat = 3

@@ -10,6 +10,13 @@ import UIKit
 
 class MomentsImageRowCell: MomentsBaseRowCell {
 
+    fileprivate var imgImgView: UIImageView = {
+        let imgView = UIImageView()
+        imgView.contentMode = .scaleAspectFill
+        imgView.clipsToBounds = true
+        return imgView
+    }()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,6 +26,75 @@ class MomentsImageRowCell: MomentsBaseRowCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        selectionStyle = .none
+        
+        initContentView()
+        initConstraints()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        imgImgView.image = nil
+        
+        imgImgView.snp.remakeConstraints { make in
+            make.leading.equalTo(nicknameLabel)
+            make.top.equalTo(bodyTextLabel.snp.bottom).offset(12)
+            make.size.equalTo(CGSize(width: 90, height: 160))
+            make.bottom.equalTo(-UIConstants.Margin.bottom)
+        }
+        contentView.layoutIfNeeded()
+    }
+    
+    // MARK: - ============= Initialize View =============
+    override func initContentView() {
+        super.initContentView()
+        
+        contentView.addSubview(imgImgView)
+    }
+    
+    // MARK: - ============= Constraints =============
+    override func initConstraints() {
+        super.initConstraints()
+        
+        breakBodyTextBottomConstraints()
+        
+        imgImgView.snp.makeConstraints { make in
+            make.leading.equalTo(nicknameLabel)
+            make.top.equalTo(bodyTextLabel.snp.bottom).offset(12)
+            make.size.equalTo(CGSize(width: 90, height: 160))
+            make.bottom.equalTo(-UIConstants.Margin.bottom)
+        }
+    }
+    
+    // MARK: - ============= Reload =============
+    override func setup(entity: MomentEntity) {
+        super.setup(entity: entity)
+        
+        if entity.content == nil || entity.content?.count ?? 0 == 0 {
+            
+            imgImgView.snp.remakeConstraints { make in
+                make.leading.equalTo(nicknameLabel)
+                make.top.equalTo(nicknameLabel.snp.bottom).offset(12)
+                make.size.equalTo(CGSize(width: 90, height: 160))
+                make.bottom.equalTo(-UIConstants.Margin.bottom)
+            }
+            contentView.layoutIfNeeded()
+        }
+        
+        if let string = entity.images?.first?.url, let url = URL(string: string) {
+            imgImgView.setImageWith(url, placeholder: nil)
+        }
+        
     }
 
 }
